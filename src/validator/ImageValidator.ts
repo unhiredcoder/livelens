@@ -1,5 +1,5 @@
 
-export function Imagevalidator(
+export function ImageValidator(
   name: string | undefined,
 ): string | null {
   let flag: string | null = null;

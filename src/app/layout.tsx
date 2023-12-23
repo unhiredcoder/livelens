@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import toast, { Toaster } from 'react-hot-toast';
 import CustomSessionProvider from './CustomSessionProvider';
+import { EdgeStoreProvider } from '../lib/edgestore';
+
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Toaster />
         <CustomSessionProvider>
-        {children}
+        <EdgeStoreProvider>{children}</EdgeStoreProvider>
         </CustomSessionProvider>
       </body>
     </html>
