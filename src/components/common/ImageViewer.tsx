@@ -35,7 +35,7 @@ const ImageViewer = ({ image }: { image: string }) => {
                                 width: '100vw'
                             }),
                     }}
-                    src={`https://files.edgestore.dev/nelul99l6urvt2x4/publicFiles/_public/${extractUniqueKey(image)}`}
+                    src={`${process.env.NEXT_PUBLIC_EDGE_STORE_URL}/${extractUniqueKey(image)}`}
                     width={100}
                     height={100}
                     alt='post'
@@ -50,7 +50,7 @@ const ImageViewer = ({ image }: { image: string }) => {
                         <Image
                             className='w-full p-4 cursor-pointer mt-2 rounded-md object-cover'
                             sizes="(max-width:768px) 100vw,700px"
-                            src={`https://files.edgestore.dev/nelul99l6urvt2x4/publicFiles/_public/${extractUniqueKey(image)}`}
+                            src={`${process.env.NEXT_PUBLIC_EDGE_STORE_URL}/${extractUniqueKey(image)}`}
                             width={100}
                             height={100}
                             unoptimized
