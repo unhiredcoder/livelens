@@ -1,0 +1,62 @@
+import { NextRequest, NextResponse } from "next/server";
+import { CustomSession, authOptions } from "../auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+import { CustomErrorReporter } from "@/validator/CustomErrorReporter";
+import vine, { errors } from "@vinejs/vine";
+import { VinejsCommentSchema } from "@/validator/VinejsCommentSchema";
+import prisma from "@/Database/db.config";
+
+export async function POST(request: NextRequest) {
+
+    const data = await request.json()
+    try {
+        const session: CustomSession | null = await getServerSession(authOptions);
+        if (!session) {
+            return NextResponse.json({ status: 200, message: "Not Authorized" });
+        }
+
+        vine.errorReporter = () => new CustomErrorReporter();
+        const validator = vine.compile(VinejsCommentSchema);
+        const payload = await validator.validate(data);
+
+        await prisma.post.update({
+            where: {
+                id: Number(payload.post_id)
+            },
+            data: {
+                comment_count: {
+                    increment: 1,
+                }
+            }
+        })
+
+        // add comments in db
+
+
+        await prisma.comment.create({
+            data: {
+                user_id: Number(session.user?.id),
+                post_id: Number(payload.post_id),
+                content: payload.content
+            }
+        })
+
+        return NextResponse.json({
+            status: 200,
+            message: "Comment added successfully!",
+        });
+
+    } catch (error) {
+        if (error instanceof errors.E_VALIDATION_ERROR) {
+            console.log(error.messages);
+            return NextResponse.json({ status: 400, errors: error.messages });
+        } else {
+            console.error(error);
+            return NextResponse.json({
+                status: 500,
+                message: "Internal Server Error",
+            });
+        }
+    }
+
+}

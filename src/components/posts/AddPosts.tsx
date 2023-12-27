@@ -1,102 +1,106 @@
+'use client'
 import React, { useState, useRef } from 'react';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 import UserAvatar from '../common/UserAvatar';
 import { Input } from '../ui/input';
-import { FileInput, Image } from 'lucide-react';
+import { Image } from 'lucide-react';
 import { Button } from '../ui/button';
-import axios from 'axios';
-import toast from 'react-hot-toast';
 import { useEdgeStore } from '@/lib/edgestore';
 import ImagePreviewCard from '../common/ImagePreviewCard';
 import { ImageValidator } from '@/validator/ImageValidator';
+import { useRouter } from 'next/navigation';
+import { ReloadIcon } from "@radix-ui/react-icons"
 
-type PostErrorType = {
-    content?: string;
-};
+
 
 const AddPosts = () => {
+    const router = useRouter()
     const imageRef = useRef<HTMLInputElement | null>(null);
     const [content, setContent] = useState<string>('');
-    const [image, setImage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [errors, setErrors] = useState<PostErrorType>({});
-    const [isImageNotValid, setIsImageNotValid] = useState<boolean>(false);
+    const [isImageNotValid, setIsImageNotValid] = useState<string>('');
     const [previewUrl, setPreviewUrl] = useState<string | undefined>();
+    const [file, setFile] = useState<File | null>(null);
     const { edgestore } = useEdgeStore();
 
-    const handleClick = () => {
-        imageRef.current?.click();
-    };
+    const handleClick = () => imageRef.current?.click();
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile: File | undefined = e.target.files?.[0];
-    
+        const selectedFile = e.target.files?.[0];
+
         try {
             if (selectedFile) {
+                setFile(selectedFile);
+                setLoading(true);
                 const imageUrl = URL.createObjectURL(selectedFile);
                 setPreviewUrl(imageUrl);
-                const isImageNotValid = ImageValidator(selectedFile.name);
+                const isImageNotValid = ImageValidator(selectedFile.name, selectedFile.size);
                 if (isImageNotValid) {
                     setPreviewUrl(undefined);
-                    setIsImageNotValid(true);
+                    setIsImageNotValid(isImageNotValid);
                     setLoading(false);
+                    setFile(null);
                     return;
                 }
-                setIsImageNotValid(false);
-
-                const res = await edgestore.publicFiles.upload({
-                    file: selectedFile,
-                });
-                
-                if (res) {
-                    setImage(res.url);
-                }
+                setIsImageNotValid('');
+                setLoading(false);
             } else {
-                // console.log('No image selected');
                 setPreviewUrl(undefined);
-                setImage(null);
             }
         } catch (error: any) {
             console.error('Error uploading image:', error.message);
+            setLoading(false);
         }
     };
-    
 
     const removePreviewImage = () => {
-        setImage(null);
         setPreviewUrl(undefined);
-        setIsImageNotValid(false); 
-
+        setIsImageNotValid('');
+        setFile(null);
     };
 
-    const Submit = () => {
-        setLoading(true);
+    const uploadImage = async () => {
+        try {
+            setLoading(true);
+            if (file) {
+                const res = await edgestore.publicFiles.upload({ file });
+                return res.url;
+            }
+        } catch (error: any) {
+            console.error('Error uploading image:', error.message);
+        } finally {
+            setLoading(false);
+        }
+        return null;
+    };
 
+    const Submit = async () => {
+        setLoading(true);
         const postData = {
-            content: content,
-            image: image, 
+            content,
+            image: await uploadImage(),
         };
 
-
-
-        axios
-        .post('/api/posts', postData)
-        .then((res) => {
-            setLoading(false);
+        axios.post('/api/posts', postData).then((res) => {
             const response = res.data;
-            if (response.status === 400) {
-                setErrors(response.errors);
-            } else if (response.status === 200) {
+            if (response.status === 200) {
                 toast.success(response.message);
                 setErrors({});
-                setImage(null);
-                setContent('');
-                setPreviewUrl(undefined);
-            }
-        })
-            .catch((err) => {
                 setLoading(false);
-                console.log('There is some err occurred ', err);
-            });
+                setContent('');
+                setFile(null);
+                setPreviewUrl(undefined);
+                setIsImageNotValid('');
+                router.refresh();
+            } else if (response.status === 400) {
+                setErrors(response.errors);
+            }
+        }).catch((err) => {
+            setLoading(false);
+            console.log('Error occurred:', err);
+        });
     };
 
     return (
@@ -110,12 +114,13 @@ const AddPosts = () => {
                 <textarea
                     className='w-full h-24  resize-none rounded-lg text-md p-2 bg-muted outline-none placeholder:font-normal'
                     value={content}
+                    placeholder='Post something interesting or informative...'
                     onChange={(e) => setContent(e.target.value)}
                 ></textarea>
             </div>
             {isImageNotValid && (
                 <div className='ml-14 w-full text-xs text-red-400 font-light'>
-                    Image is not valid. Please choose a valid image.
+                    {isImageNotValid}
                 </div>
             )}
             <div className='ml-14 w-full text-xs text-red-400 font-light'>{errors.content}</div>
@@ -123,7 +128,14 @@ const AddPosts = () => {
                 <Input ref={imageRef} onChange={handleImageChange} type='file' className='hidden' />
                 <Image height={20} width={20} onClick={handleClick} className='cursor-pointer' />
                 <Button onClick={Submit} disabled={content?.length < 3 || loading} size='sm'>
-                    Post
+                    {loading ? (
+                        <>
+                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                        </>
+                    ) : (
+                        "Post"
+                    )}
                 </Button>
             </div>
         </div>

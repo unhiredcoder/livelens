@@ -23,9 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Toaster />
-        <CustomSessionProvider>
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
-        </CustomSessionProvider>
+        <EdgeStoreProvider>
+          <CustomSessionProvider>
+            {children}
+          </CustomSessionProvider>
+        </EdgeStoreProvider>
       </body>
     </html>
   )

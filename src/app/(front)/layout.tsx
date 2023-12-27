@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '../globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import BaseComponent from '@/components/base/BaseComponent'
 
 
 export const metadata: Metadata = {
@@ -20,7 +21,9 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
         >
+            <BaseComponent>
             {children}
+            </BaseComponent>
         </ThemeProvider>
     )
 }

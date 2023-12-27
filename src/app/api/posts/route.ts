@@ -6,6 +6,38 @@ import { CustomErrorReporter } from "@/validator/CustomErrorReporter";
 import { VinejsPostSchema } from "@/validator/VinejsPostSchema";
 import prisma from "@/Database/db.config";
 
+
+export async function GET(request: NextRequest) {
+    const session: CustomSession | null = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.json({ status: 200, message: "Un-Authorized" })
+    }
+
+    const posts = await prisma.post.findMany({
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                    username: true,
+                }
+            }
+        },
+        orderBy:{
+            id:"desc"
+        }
+    })
+
+    return NextResponse.json({ status: 200, data: posts })
+
+}
+
+
+
+
+
+
+
 export async function POST(request: NextRequest) {
     const session: CustomSession | null = await getServerSession(authOptions);
     if (!session) {
@@ -21,8 +53,7 @@ export async function POST(request: NextRequest) {
         vine.errorReporter = () => new CustomErrorReporter();
         const validator = vine.compile(VinejsPostSchema);
         const payload = await validator.validate(data);
-        // Create a new post in the database
-        await prisma.userPosts.create({
+        await prisma.post.create({
             data: {
                 content: payload.content,
                 user_id: Number(session.user?.id),

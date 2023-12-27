@@ -30,7 +30,7 @@ const SideBarLinks = () => {
                 </Link>
             </li>
             <li>
-                <Link href='/'
+                <Link href='/profile'
                     className={`flex items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold hover:bg-slate-300/10 ${pathName === "/profile" ? "font-bold" : ""}`}>
                     <User2 height={25} width={25} /><h3 className='text-lg lg:text-xl'>Profile</h3>
                 </Link>

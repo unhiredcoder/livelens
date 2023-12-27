@@ -52,7 +52,7 @@ function Login() {
                             callbackUrl: '/',
                             redirect: true
                         })
-                    toast.success('Login In Successfully');
+                    toast.success('Login Successfully');
                 } else if (response.status == 400) {
                     setErrors(response.errors)
                 }
@@ -61,7 +61,6 @@ function Login() {
                 toast.error('Something went wrong ❌');
                 console.log("Error", error);
             })
-        console.log('the auth state ', authState);
     }
 
     return (
