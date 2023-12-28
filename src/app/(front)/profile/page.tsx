@@ -12,9 +12,7 @@ import CommentCard from '@/components/common/CommentCard'
 
 
 const profile = async () => {
-
   const session: CustomSession | null = await getServerSession(authOptions)
-
   const posts: Array<PostType> | [] = await getUserPosts();
   const comments: Array<CommentType> | [] = await getUserComments();
 
@@ -33,28 +31,28 @@ const profile = async () => {
         </div>
       </div>
       <div className='mt-5'>
-        <Tabs defaultValue="account" className="w-full">
+        <Tabs defaultValue="post" className="w-full">
           <TabsList className='w-full'>
             <TabsTrigger className='w-full' value="post">post</TabsTrigger>
             <TabsTrigger className='w-full' value="comment">comment</TabsTrigger>
           </TabsList>
           <TabsContent value="post">
             {
-              posts && posts?.length < 1 && <h1 className='text-center font-bold text-xl mt-5'>No Post Found</h1>
+              posts && posts?.length < 1 && <h1 className='text-center font-bold text-xl mt-8 text-gray-400'>No Post Found</h1>
             }
 
             {
-              posts && posts.length > 0 && posts.map((item) => <PostCard post={item} key={item.id} />)
+              posts && posts.length > 0 && posts.map((item) => <PostCard post={item} key={item.id} isAuthCard={true} />)
             }
 
           </TabsContent>
           <TabsContent value="comment">
             {
-              comments && comments?.length < 1 && <h1 className='text-center font-bold text-xl mt-5'>No comments Found</h1>
+              comments && comments?.length < 1 && <h1 className='text-center font-bold text-gray-400 text-xl mt-8 '>No comments Found</h1>
           }
 
             {
-              comments && comments.length > 0 && comments.map((item) => <CommentCard comment={item} key={item.id} />)
+              comments && comments.length > 0 && comments.map((item) => <CommentCard comment={item} key={item.id} isAuthCard={true} />)
             }
   
           </TabsContent>

@@ -17,7 +17,7 @@ async function ShowPost({ params }: { params: { id: number } }) {
             <div className="mt-5">
                 <h1 className="font-bold text-lg mb-5">Comments</h1>
                 {
-                    post?.Comment && post.comment?.length > 0 ?
+                    post?.Comment && post.Comment?.length > 0 ?
                         (
                             <>
                                 {

@@ -1,5 +1,4 @@
 import { getPosts } from '@/lib/ServerMethods'
-import Image from 'next/image'
 import AddPosts from '@/components/posts/AddPosts'
 import PostCard from '@/components/common/PostCard'
 

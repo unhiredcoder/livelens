@@ -5,16 +5,25 @@ import AddComment from '../posts/AddComment';
 import Link from 'next/link';
 
 
-const PostCard = async ({ post,noRedirect }: { post: PostType,noRedirect?:boolean }) => {
+const PostCard = async ({
+    post,
+    isAuthCard,
+    noRedirect
+}: {
+    post: PostType,
+    noRedirect?: boolean,
+    isAuthCard?: boolean
+
+}) => {
 
     return (
         <div className='mb-7'>
-            <UserPostBar post={post} />
+            <UserPostBar post={post} isAuthCard={isAuthCard}/>
             <div className="ml-12 mt-[-1rem] mb-3">
-                <Link className='cursor-pointer' href={noRedirect ? "#" :`/post/${post.id}`}>
-                {post.content}
+                <Link className='cursor-pointer' href={noRedirect ? "#" : `/post/${post.id}`}>
+                    {post.content}
                 </Link>
-                </div>
+            </div>
             {
                 post?.image && (
                     <ImageViewer image={post.image} />
