@@ -13,25 +13,26 @@ const SideBarLinks = () => {
         <ul className='mt-10'>
             <li>
                 <Link href='/'
-                    className={`flex items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold hover:bg-slate-300/10 ${pathName === "/" ? "font-bold" : ""}`}>
+                    className={`flex items-center text-primary  flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold  ${pathName === "/" ? "bg-custom text-white font-bold" : ""}`}>
                     <Home height={25} width={25} /><h3 className='text-lg lg:text-xl'>Home</h3>
                 </Link>
             </li>
             <li>
-                <Link href='/'
-                    className={`flex items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold hover:bg-slate-300/10 ${pathName === "/explore" ? "font-bold" : ""}`}>
+                <Link href='/explore'
+                    className={`flex items-center text-primary  flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold  ${pathName === "/explore" ? "bg-custom text-white  font-bold" : ""}`}>
                     <Search height={25} width={25} /><h3 className='text-lg lg:text-xl'>Explore</h3>
                 </Link>
             </li>
             <li>
-                <Link href='/'
-                    className={`flex items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold hover:bg-slate-300/10 ${pathName === "/notification" ? "font-bold" : ""}`}>
-                    <Bell height={25} width={25} /><h3 className='text-lg lg:text-xl'>Notification</h3>
+                <Link href='/notification'
+                    className={`flex text-primary  items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold  ${pathName === "/notification" ? " bg-custom text-white font-bold" : ""}`}>
+                    <Bell height={25} width={25} className='text-lg animate:ping' />
+                    <h3 className='text-lg  lg:text-xl'>Notification</h3>
                 </Link>
             </li>
             <li>
                 <Link href='/profile'
-                    className={`flex items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold hover:bg-slate-300/10 ${pathName === "/profile" ? "font-bold" : ""}`}>
+                    className={`flex text-primary  items-center flex-start space-x-4 p-4 pl-2 rounded-xl hover:font-bold  ${pathName === "/profile" ? "bg-custom text-white  font-bold" : ""}`}>
                     <User2 height={25} width={25} /><h3 className='text-lg lg:text-xl'>Profile</h3>
                 </Link>
             </li>

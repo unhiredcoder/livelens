@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import prisma from "@/Database/db.config";
+import { CustomSession, authOptions } from "../../auth/[...nextauth]/options";
 
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
-    const users = await prisma.user.findUnique({
+
+    const session: CustomSession | null = await getServerSession(authOptions)
+
+    if (!session) {
+        return NextResponse.json({ status: 500, message: "Un-Authorized" })
+    }
+    const user = await prisma.user.findUnique({
         where: {
             id: Number(params.id)
         },
@@ -13,7 +20,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
             name: true,
             username: true,
             email: true,
-
             post: {
                 include: {
                     user: {
@@ -25,7 +31,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
                     }
                 }
             },
-             Comment: {
+            Likes: {
+                take: 1,
+                where: {
+                    user_id: Number(session?.user?.id)
+                }
+            },
+            Comment: {
                 include: {
                     user: {
                         select: {
@@ -40,5 +52,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
 
 
     })
+
+    return NextResponse.json({ status: 200, data: user })
 
 }

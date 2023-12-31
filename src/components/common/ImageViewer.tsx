@@ -1,17 +1,16 @@
 'use client'
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetDescription,
-    SheetFooter,
     SheetHeader,
-    SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { useMediaQuery } from "@react-hook/media-query";
 import { extractUniqueKey } from "@/lib/utils"
 import Image from "next/image"
+
+
 
 const ImageViewer = ({ image }: { image: string }) => {
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -19,6 +18,8 @@ const ImageViewer = ({ image }: { image: string }) => {
         <Sheet>
             <SheetTrigger asChild>
                 <Image
+                className="transition-opacity opacity-0 duration-[2s]"
+                    // onLoad={(image)=>image.classList.remove("opacity-0")}
                     style={{
                         width: '100%',
                         cursor: 'pointer',
@@ -42,13 +43,12 @@ const ImageViewer = ({ image }: { image: string }) => {
                     unoptimized
                 />
             </SheetTrigger>
-
-
             <SheetContent side={isMobile ? "bottom" : "right"} className="flex items-center justify-center">
                 <SheetHeader>
                     <SheetDescription className="mb-4 flex items-center w-full justify-center">
                         <Image
-                            className='w-full p-4 cursor-pointer mt-2 rounded-md object-cover'
+                        //  onLoad={(image)=>image.classList.remove("opacity-0")}
+                            className='w-full p-4 cursor-pointer mt-2 rounded-md object-cover transition-opacity opacity-0 duration-[2s]'
                             sizes="(max-width:768px) 100vw,700px"
                             src={`${process.env.NEXT_PUBLIC_EDGE_STORE_URL}/${extractUniqueKey(image)}`}
                             width={100}

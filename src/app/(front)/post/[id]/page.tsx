@@ -8,7 +8,7 @@ async function ShowPost({ params }: { params: { id: number } }) {
     const post = await getPost(params.id)
     return (
         <div>
-            <DynamicNavbar title='Show Post' />
+            <DynamicNavbar title='Post Details' />
             {
                 post && (<div className='mt-7'>
                     <PostCard post={post} noRedirect={true} />

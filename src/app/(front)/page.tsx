@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <>
       <AddPosts />
-      <div className="mt-5">
+      <div className="mt-5 p-3">
         {
           posts?.map((item) => (
             <PostCard post={item} key={item.id} />

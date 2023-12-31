@@ -22,6 +22,7 @@ export default function RootLayout({
             enableSystem
         >
             <BaseComponent>
+            
             {children}
             </BaseComponent>
         </ThemeProvider>

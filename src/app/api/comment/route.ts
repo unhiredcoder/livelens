@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import { CustomSession, authOptions } from "../auth/[...nextauth]/options";
-import { getServerSession } from "next-auth";
-import { CustomErrorReporter } from "@/validator/CustomErrorReporter";
-import vine, { errors } from "@vinejs/vine";
-import { VinejsCommentSchema } from "@/validator/VinejsCommentSchema";
-import prisma from "@/Database/db.config";
+    import { NextRequest, NextResponse } from "next/server";
+    import { CustomSession, authOptions } from "../auth/[...nextauth]/options";
+    import { getServerSession } from "next-auth";
+    import { CustomErrorReporter } from "@/validator/CustomErrorReporter";
+    import vine, { errors } from "@vinejs/vine";
+    import { VinejsCommentSchema } from "@/validator/VinejsCommentSchema";
+    import prisma from "@/Database/db.config";
 
-export async function POST(request: NextRequest) {
+    export async function POST(request: NextRequest) {
 
-    const data = await request.json()
+        const data = await request.json()
     try {
         const session: CustomSession | null = await getServerSession(authOptions);
         if (!session) {
@@ -30,9 +30,17 @@ export async function POST(request: NextRequest) {
             }
         })
 
+        //  add notificaion
+
+        await prisma.notification.create({
+            data: {
+                user_id: Number(session.user?.id),
+                toUser_id: Number(payload.toUser_id),
+                content: "Commented on your post"
+            }
+        })
+
         // add comments in db
-
-
         await prisma.comment.create({
             data: {
                 user_id: Number(session.user?.id),

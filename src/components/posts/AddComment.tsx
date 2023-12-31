@@ -10,7 +10,6 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "../ui/button"
 import { MessageCircle } from "lucide-react"
 import UserPostBar from "../common/UserPostBar"
 import UserAvatar from "../common/UserAvatar"
@@ -21,33 +20,23 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 
 const AddComment = ({ post }: { post: PostType }) => {
-    const router=useRouter()
+    const router = useRouter()
     const { data } = useSession()
     const [content, setContent] = useState<string>("")
-    const [errors, setErrors] = useState<PostErrorType>({})
     const [loading, setLoading] = useState<boolean>(false)
-
-
-
     const submit = async () => {
         setLoading(true)
-
-        // Check if content and post_id are not empty or undefined
-        if (!content || !post.id) {
-            console.log(content);
-            console.log(post.id);
-        }
         await axios.post("/api/comment", {
             content: content,
-            post_id: post.id.toString()
+            post_id: post.id.toString(),
+            toUser_id: post.user_id,
         }).then((response) => {
             const res = response.data
-            if (res.status == 400) {
-                setErrors(res.errors)
+            if (res.status == 400) {    
+                toast.error(res?.message)
             }
             else if (res.status == 200) {
                 setContent("")
-                setErrors({})
                 setLoading(false)
                 router.refresh()
                 toast.success(res?.message)
@@ -63,25 +52,31 @@ const AddComment = ({ post }: { post: PostType }) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <MessageCircle width={20} height={20} className="cursor-pointer" />
+                <MessageCircle width={20} height={20} className="cursor-pointer text-gray-500" />
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Add comment</AlertDialogTitle>
+                    <AlertDialogTitle className="text-primary">Share your thoughts by comment</AlertDialogTitle>
                     <AlertDialogDescription>
                         <div className="mt-5">
                             <UserPostBar post={post} />
                             <div className="ml-12 mt-1">{post.content}</div>
                             <div className="mt-5 flex justify-start items-start">
-                                <UserAvatar name={data?.user?.name ?? "A"} />
-                                <textarea value={content} onChange={(e) => setContent(e.target.value)} className="w-full h-24 rounded-lg text-white text-md p-2 outline-none resize-none placeholder:font-normal ml-2" placeholder="Type your comment" ></textarea>
+                                <UserAvatar name={data?.user?.name ?? "A"} image='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=626&ext=jpg' />
+                                <textarea value={content} onChange={(e) => setContent(e.target.value)} className="w-full h-24 rounded-lg text-primary text-md p-2 outline-none bg-muted resize-none placeholder:font-normal ml-2" placeholder="Type your comment here..." ></textarea>
                             </div>
                         </div>
-                        <span className="text-red-400 font-bold ml-12">{errors?.content}</span>
+                        <span className="text-gray-500  ml-12">{content?.length < 10 ? "The content field must have at least 10 characters" : <span className="text-green-500">Now okay :)</span>}</span>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogAction onClick={submit}  >                {loading ? "Processing..." : "Post Comment"}
+                    <AlertDialogCancel className="text-primary">Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={submit} disabled={content?.length < 10 || loading}>
+                        {loading ?
+                            "Proccessing.."
+                            :
+                            "Post"
+                        }
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

@@ -1,8 +1,6 @@
 import { CustomSession, authOptions } from '@/app/api/auth/[...nextauth]/options'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { MoveLeft } from 'lucide-react'
 import { getServerSession } from 'next-auth'
-import Link from 'next/link'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUserComments, getUserPosts } from '@/lib/ServerMethods'
 import PostCard from '@/components/common/PostCard'
@@ -17,24 +15,40 @@ const profile = async () => {
   const comments: Array<CommentType> | [] = await getUserComments();
 
   return (
-    <>
-      <DynamicNavbar title='profile' />
-      <div className="flex mt-5  items-center space-x-4">
-        <Avatar className='h-20 w-20'>
-          <AvatarImage src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=626&ext=jpg' />
-          <AvatarFallback className='text-2xl font-bold'> {session?.user?.name}</AvatarFallback>
-        </Avatar>
+    <div className='p-3'>
+      <div className="mt-3">
+        <DynamicNavbar title={`My Profile`} />
+      </div>
+      <div className="flex mt-5 bg-custom w-full p-4 rounded-lg items-center space-x-4">
+        <div className='border-r-2 border-gray-700 pr-3'>
+
+
+          <Avatar className='h-20 w-20 '>
+            {session?.user?.image ? (
+              <AvatarImage src={session?.user?.image} />
+            ) : (
+              <>
+                <AvatarImage
+                  src={`https://api.multiavatar.com/${session?.user?.name}.png`}
+                />                  
+                 <AvatarFallback className='text-2xl font-bold'>
+                  {session?.user?.name ?? "A"}
+                </AvatarFallback>
+              </>
+            )}
+          </Avatar>
+        </div>
         <div>
-          <h1 className="text-2xl">{session?.user?.name}</h1>
-          <p className='text-md text-orange-300'>@{session?.user?.username}</p>
-          <h1 className='text-xl'>{session?.user?.email}</h1>
+          <h1 className="text-2xl capitalize">{session?.user?.name}</h1>
+          <p className='text-md text-yellow-500'>@{session?.user?.username ? session?.user?.username : session?.user?.name}</p>
+          <h1 className='text-lg text- lowercase'>{session?.user?.email}</h1>
         </div>
       </div>
       <div className='mt-5'>
-        <Tabs defaultValue="post" className="w-full">
-          <TabsList className='w-full'>
-            <TabsTrigger className='w-full' value="post">post</TabsTrigger>
-            <TabsTrigger className='w-full' value="comment">comment</TabsTrigger>
+        <Tabs defaultValue="post" className="w-full ">
+          <TabsList className='w-full bg-gray-600 h-14'>
+            <TabsTrigger className='w-full h-12 rounded-lg  font-bold  ' value="post"><span className='text-primary'>POSTS</span></TabsTrigger>
+            <TabsTrigger className='w-full h-12 rounded-lg  font-bold ' value="comment"><span className='text-primary'>COMMENTS</span></TabsTrigger>
           </TabsList>
           <TabsContent value="post">
             {
@@ -49,17 +63,17 @@ const profile = async () => {
           <TabsContent value="comment">
             {
               comments && comments?.length < 1 && <h1 className='text-center font-bold text-gray-400 text-xl mt-8 '>No comments Found</h1>
-          }
+            }
 
             {
               comments && comments.length > 0 && comments.map((item) => <CommentCard comment={item} key={item.id} isAuthCard={true} />)
             }
-  
+
           </TabsContent>
         </Tabs>
 
       </div>
-    </>
+    </div>
   )
 }
 

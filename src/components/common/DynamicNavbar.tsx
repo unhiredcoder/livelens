@@ -7,9 +7,9 @@ const DynamicNavbar = ({title}:{title:string}) => {
 
     const router =useRouter()
     return (
-        <div className='flex space-x-6 items-center'>
-                <MoveLeft size={30} width={30}onClick={()=>router.back()}  className='cursor-pointer hover:bg-slate-300 hover:text-black rounded-xl p-1' />
-            <h1 className='text-xl font-bold'>{title}</h1>
+        <div className='flex mt-6 space-x-6 items-center'>
+                <MoveLeft size={30} width={30} onClick={()=>router.back()}  className='cursor-pointer animate-pulse text-primary rounded-xl p-1' />
+            <h1 className='text-sm text-primary capitalize lg:text-xl  font-bold'>{title}</h1>
         </div>)
 }
 

@@ -2,6 +2,8 @@ import prisma from "@/Database/db.config";
 import { AuthOptions, ISODateString, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GithubProvider from 'next-auth/providers/github'
+// import GoogleProvider from 'next-auth/providers/google'
 
 export interface CustomSession {
   user?: CustomUser;
@@ -12,7 +14,7 @@ export interface CustomUser {
   name?: string | null;
   username?: string | null;
   email?: string | null;
-//   image?: string | null;
+  image?: string | null;
 }
 export const authOptions: AuthOptions = {
   pages: {
@@ -41,7 +43,11 @@ export const authOptions: AuthOptions = {
   },
 
   providers: [
-    CredentialsProvider({
+    GithubProvider({
+      clientId: '4ad9c02835b405ca2cb1' ?? "",
+      clientSecret: '4aab73b9ec903838255d68076751ccd1553f45f1' ?? ""
+    }),
+     CredentialsProvider({
       name: "Credentials",
       credentials: {
         email: {},
@@ -57,7 +63,7 @@ export const authOptions: AuthOptions = {
             name: true,
             email: true,
             username: true,
-        },
+          },
         });
 
         if (user) {

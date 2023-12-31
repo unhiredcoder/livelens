@@ -1,7 +1,6 @@
 "use client"
 import Image from 'next/image'
 import React from 'react'
-import ThemeToggleBtn from '../common/ThemeToggleBtn'
 import { useTheme } from 'next-themes'
 import SideBarLinks from '../common/SideBarLinks'
 
@@ -15,7 +14,7 @@ const LeftSideBar = () => {
                 <Image src='/images/logo.png'
                     className={`${theme === 'dark' ? 'invert rounded-lg' : 'rounded-lg'}`}
                     height={50} width={50} alt='logo' />
-                <h1 className='font-bold text-xl ml-2'>LiveLens</h1>
+                <h1 className='font-bold text-primary text-xl ml-2'>LiveLens</h1>
             </div>
          <SideBarLinks/>
         </div>

@@ -24,13 +24,13 @@ export default function SignOutBtn() {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle className="text-primary">Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             After logout . You have to sign in again to access your account.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="text-primary">Cancel</AlertDialogCancel>
           <AlertDialogAction className="bg-red-400" onClick={() => signOut({ callbackUrl: "/login",redirect:true})}>
             Continue
           </AlertDialogAction>

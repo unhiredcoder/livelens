@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import CustomSessionProvider from './CustomSessionProvider';
 import { EdgeStoreProvider } from '../lib/edgestore';
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Toaster />
+        <Toaster position='bottom-center' />
         <EdgeStoreProvider>
           <CustomSessionProvider>
             {children}

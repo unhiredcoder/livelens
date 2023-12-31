@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
         where: {
             id: Number(params.id)
         },
-        include: {
+           include: {
             user: {
                 select: {
                     id: true,
@@ -27,7 +27,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
                         }
                     }
                 }
-            }
+            },
+            
         }
     }
     )

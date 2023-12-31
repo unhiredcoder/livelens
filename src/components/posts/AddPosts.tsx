@@ -2,7 +2,6 @@
 import React, { useState, useRef } from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import UserAvatar from '../common/UserAvatar';
 import { Input } from '../ui/input';
 import { Image } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -11,11 +10,18 @@ import ImagePreviewCard from '../common/ImagePreviewCard';
 import { ImageValidator } from '@/validator/ImageValidator';
 import { useRouter } from 'next/navigation';
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { useMediaQuery } from '@react-hook/media-query';
+import { useSession } from 'next-auth/react'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import Link from 'next/link';
+
 
 
 
 const AddPosts = () => {
     const router = useRouter()
+    const { data } = useSession()
+    const isMobile = useMediaQuery("(max-width: 768px)");
     const imageRef = useRef<HTMLInputElement | null>(null);
     const [content, setContent] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -104,41 +110,60 @@ const AddPosts = () => {
     };
 
     return (
-        <div className='mt-5'>
-            {previewUrl ? <ImagePreviewCard image={previewUrl} removeCall={removePreviewImage} /> : null} <br />
-            <div className='flex justify-start items-start space-x-4 '>
-                <UserAvatar
-                    name='Rahul'
-                    image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBv503LZEg1VPkiF8QmU3zO7nI_GrcdqnOrw&usqp=CAU'
-                />
-                <textarea
-                    className='w-full h-24  resize-none rounded-lg text-md p-2 bg-muted outline-none placeholder:font-normal'
-                    value={content}
-                    placeholder='Post something interesting or informative...'
-                    onChange={(e) => setContent(e.target.value)}
-                ></textarea>
-            </div>
-            {isImageNotValid && (
-                <div className='ml-14 w-full text-xs text-red-400 font-light'>
-                    {isImageNotValid}
+        <>
+            <div className='mt-5 px-3'>
+                {previewUrl ? <ImagePreviewCard image={previewUrl} removeCall={removePreviewImage} /> : null} <br />
+                <div className='flex justify-start items-center space-x-4 '>
+                    {
+                        !isMobile ?
+                            <Link href='/profile'>
+                                <Avatar className='border-1 h-12 w-12 shadow-sm border-primary'>
+                                    {data?.user?.image ? (
+                                        <AvatarImage src={data?.user?.image} />
+                                    ) : (
+                                        <>
+                                            <AvatarImage
+                                                src={`https://api.multiavatar.com/${data?.user?.name}.png`}
+                                            />
+                                            <AvatarFallback className='text-2xl font-bold'>
+                                                {data?.user?.name ?? "A"}
+                                            </AvatarFallback>
+                                        </>
+                                    )}
+                                </Avatar>
+                            </Link>
+                            : <></>
+                    }
+                    <textarea
+                        className='w-full h-32 resize-none rounded-lg text-md p-2 bg-accent text-primary outline-none placeholder:font-normal'
+                        value={content}
+                        placeholder='Post something interesting or informative...'
+                        onChange={(e) => setContent(e.target.value)}
+                    ></textarea>
                 </div>
-            )}
-            <div className='ml-14 w-full text-xs text-red-400 font-light'>{errors.content}</div>
-            <div className='mt-2 ml-14 flex justify-between items-center'>
-                <Input ref={imageRef} onChange={handleImageChange} type='file' className='hidden' />
-                <Image height={20} width={20} onClick={handleClick} className='cursor-pointer' />
-                <Button onClick={Submit} disabled={content?.length < 3 || loading} size='sm'>
-                    {loading ? (
-                        <>
-                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                            Please wait
-                        </>
-                    ) : (
-                        "Post"
-                    )}
-                </Button>
+                {isImageNotValid && (
+                    <div className='ml-14 w-full text-xs text-red-400 font-light'>
+                        {isImageNotValid}
+                    </div>
+                )}
+                <div className='ml-14 w-full text-xs text-red-400 font-light'>{errors.content}</div>
+                <div className={`mt-2 ${isMobile ? "" : "ml-14"} px-4  flex justify-between items-center`}>
+                    <Input ref={imageRef} onChange={handleImageChange} type='file' className='hidden' />
+                    <Image height={20} width={20} onClick={handleClick} className='text-primary cursor-pointer' />
+                    <Button onClick={Submit} disabled={content?.length < 3 || loading} size='default'>
+                        {loading ? (
+                            <>
+                                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                                Please wait
+                            </>
+                        ) : (
+                            "Post"
+                        )}
+                    </Button>
+                </div>
             </div>
-        </div>
+        </>
+
     );
 };
 

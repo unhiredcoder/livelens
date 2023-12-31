@@ -57,3 +57,39 @@ export async function getUserComments() {
     const Response = await res.json()
     return Response?.data;
 }
+
+
+export async function getUser(id:number) {
+    const headersList = headers()
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user/${id}`, { cache: "no-store", headers: headersList })
+    if (!res.ok) {
+        throw new Error('Failed to fetch data')
+    }
+    const Response = await res.json()
+    return Response?.data;
+}
+
+
+
+export async function getNotifications() {
+    const headersList = headers()
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/notification`, { cache: "no-store", headers: headersList })
+    if (!res.ok) {
+        throw new Error('Failed to fetch data')
+    }
+    const Response = await res.json()
+    return Response?.data;
+}
+
+
+
+export async function getExploreUsers(query:string) {
+    const headersList = headers()
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/explore?query=${query}`, { cache: "no-store", headers: headersList })
+    if (!res.ok) {
+        throw new Error('Failed to fetch data')
+    }
+    const Response = await res.json()
+    return Response?.data;
+}
+

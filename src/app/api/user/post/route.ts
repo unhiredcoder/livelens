@@ -21,6 +21,12 @@ export async function GET(request: NextRequest) {
                     name: true,
                     username: true,
                 }
+            },
+            Likes: {
+                take: 1,
+                where: {
+                    user_id: Number(session?.user?.id)
+                }
             }
         },
         orderBy: {
