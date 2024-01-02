@@ -13,13 +13,13 @@ import Image from "next/image"
 
 
 const ImageViewer = ({ image }: { image: string }) => {
-    const isMobile = useMediaQuery("(max-width: 768px)");
+    const isMobile = useMediaQuery("(max-width: 768px)");    
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Image
                 className="transition-opacity opacity-0 duration-[2s]"
-                    // onLoad={(image)=>image.classList.remove("opacity-0")}
+                    onLoadingComplete={(image)=>image.classList.remove("opacity-0")}
                     style={{
                         width: '100%',
                         cursor: 'pointer',
@@ -47,7 +47,7 @@ const ImageViewer = ({ image }: { image: string }) => {
                 <SheetHeader>
                     <SheetDescription className="mb-4 flex items-center w-full justify-center">
                         <Image
-                        //  onLoad={(image)=>image.classList.remove("opacity-0")}
+                         onLoadingComplete={(image)=>image.classList.remove("opacity-0")}
                             className='w-full p-4 cursor-pointer mt-2 rounded-md object-cover transition-opacity opacity-0 duration-[2s]'
                             sizes="(max-width:768px) 100vw,700px"
                             src={`${process.env.NEXT_PUBLIC_EDGE_STORE_URL}/${extractUniqueKey(image)}`}
