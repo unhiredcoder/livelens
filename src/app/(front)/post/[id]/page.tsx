@@ -7,7 +7,7 @@ import React from 'react'
 async function ShowPost({ params }: { params: { id: number } }) {
     const post = await getPost(params.id)
     return (
-        <div>
+        <div className='m-3'>
             <DynamicNavbar title='Post Details' />
             {
                 post && (<div className='mt-7'>
