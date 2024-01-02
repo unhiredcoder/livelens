@@ -14,8 +14,8 @@ const ShowUser = async ({ params }: { params: { id: number } }) => {
             <div className="mt-3">
                 <DynamicNavbar title={`${user?.name}'s Profile`} />
             </div>
-            <div className="flex mt-5 bg-custom w-full pl-0 p-4 rounded-lg items-center space-x-4">
-                <div className='border-r-2 border-gray-700 pr-3'>
+            <div className="flex mt-5 bg-custom w-full  p-4 rounded-lg items-center space-x-4">
+                <div className='border-r-2 border-gray-700 pl-3 pr-3'>
                     <Avatar className='h-20 w-20 '>
                         <AvatarImage
                             src={`https://api.multiavatar.com/${user?.name}.png`}
