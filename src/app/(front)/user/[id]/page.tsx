@@ -17,8 +17,9 @@ const ShowUser = async ({ params }: { params: { id: number } }) => {
             <div className="flex mt-5 bg-custom w-full pl-0 p-4 rounded-lg items-center space-x-4">
                 <div className='border-r-2 border-gray-700 pr-3'>
                     <Avatar className='h-20 w-20 '>
-                        <AvatarImage src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=626&ext=jpg' />
-                        <AvatarFallback className='text-2xl font-bold'> {user?.name ?? "A"}</AvatarFallback>
+                        <AvatarImage
+                            src={`https://api.multiavatar.com/${user?.name}.png`}
+                        />                        <AvatarFallback className='text-2xl font-bold'> {user?.name ?? "A"}</AvatarFallback>
                     </Avatar>
                 </div>
                 <div>

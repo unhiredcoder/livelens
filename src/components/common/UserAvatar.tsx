@@ -19,7 +19,7 @@ const UserAvatar = ({ name, image }: { name: string, image?: string }) => {
       {error && (
         <AvatarImage
           src={`https://ui-avatars.com/api/?name=${name}&rounded=true&format=svg`}
-          onError={() => setError(false)} // Reset error state if fallback also fails
+          onError={() => setError(false)} 
         />
       )}
       {!error && <AvatarFallback>{name}</AvatarFallback>}

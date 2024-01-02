@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 module.exports = {
   images: {
     remotePatterns: [
@@ -5,6 +6,14 @@ module.exports = {
         protocol: 'https',
         hostname: 'files.edgestore.dev',
       },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '/u/**',
+      },
     ],
   },
 }
+
+

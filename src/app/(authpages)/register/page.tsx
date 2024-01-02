@@ -55,13 +55,18 @@ function Register() {
 
 
     const githubSignIn = async () => {
+        setLoading(true);
         try {
             await signIn('github');
+            toast.success('GitHub Login Successfully');
         } catch (error) {
-            toast.error("Failed to sign in with Google");
-            console.error("Google Sign In Error", error);
+            toast.error("Failed to sign in with GitHub");
+            console.error("GitHub Sign In Error", error);
+        } finally {
+            setLoading(false);
         }
     };
+
 
     return (
         <div className="bg-black">
