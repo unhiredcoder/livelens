@@ -1,6 +1,6 @@
 # Live Lens 🎥
 
-![Live Lens Logo](https://raw.githubusercontent.com/unhiredcoder/livelens/master/public/images/logo.png?token=GHSAT0AAAAAACVWKOE6YLD6XIRYKYIKLOQOZXGYJMQ)
+![Live Lens Logo](https://raw.githubusercontent.com/unhiredcoder/livelens/master/public/images/logo.png?token=GHSAT0AAAAAACVWKOE7BDULJ6W5FUGK7P6WZXGYXXA)
 
 **Live Lens** is a modern social media web application that allows users to post, like, comment, and share content in real-time. With user authentication, theme customization, and an engaging UI, it offers a seamless experience for users to interact with multimedia posts.
 
