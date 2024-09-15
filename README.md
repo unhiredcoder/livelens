@@ -67,34 +67,25 @@ Follow these steps to get a local copy of Live Lens up and running.
 
 2. **Install dependencies:**
 
-    ```bash
+    ```
     npm install
     ```
 
 3. **Set up the environment variables:**
 
-    Create a `.env` file in the root directory and add the following:
+    Create a `.env` file in the root directory and add the following
 
-    ```
- NEXT_PUBLIC_APP_URL=http://your-app-url
-
+```
+NEXT_PUBLIC_APP_URL=http://your-app-url
 NEXTAUTH_URL=http://your-auth-url
-
 NEXTAUTH_SECRET=YOUR_NEXTAUTH_SECRET
-
 DATABASE_URL=postgresql://your-db-username:your-db-password@your-db-host:5432/your-db-name
-
 EDGE_STORE_ACCESS_KEY=YOUR_EDGE_STORE_ACCESS_KEY
-
 EDGE_STORE_SECRET_KEY=YOUR_EDGE_STORE_SECRET_KEY
-
 NEXT_PUBLIC_EDGE_STORE_URL=http://your-edge-store-url
-
 GITHUB_CLIENT_ID=YOUR_GITHUB_CLIENT_ID
-
 GITHUB_CLIENT_SECRET=YOUR_GITHUB_CLIENT_SECRET
-
-    ```
+```
 
 4. **Run the app locally:**
 
@@ -102,4 +93,4 @@ GITHUB_CLIENT_SECRET=YOUR_GITHUB_CLIENT_SECRET
     npm run dev
     ```
 
-    The app will be running on `http://localhost:3000`.
+ The app will be running on `http://localhost:3000`.
