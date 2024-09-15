@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Live Lens 🎥
 
-## Getting Started
+![Live Lens Logo](https://raw.githubusercontent.com/unhiredcoder/livelens/master/public/images/logo.png?token=GHSAT0AAAAAACVWKOE6YLD6XIRYKYIKLOQOZXGYJMQ)
 
-First, run the development server:
+**Live Lens** is a modern social media web application that allows users to post, like, comment, and share content in real-time. With user authentication, theme customization, and an engaging UI, it offers a seamless experience for users to interact with multimedia posts.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+🔗 **Live Demo**: [Live Lens](https://livelens.onrender.com)
+
+---
+
+## 🚀 Features
+
+- 📝 **Post Creation**: Users can create and share posts with text and media.
+- 👍 **Like & Comment**: Engage with content by liking and commenting on posts.
+- 🔄 **Share**: Easily share posts across the platform.
+- 🔐 **User Authentication**: Secure login and signup system with hashed passwords.
+- 🎨 **Theme Customization**: Users can switch between light and dark modes for a personalized experience.
+- 💬 **Real-time Updates**: Posts, likes, and comments update dynamically without refreshing the page.
+- 🔍 **Responsive Design**: Fully responsive, optimized for both desktop and mobile devices.
+
+---
+
+## 🛠️ Tech Stack
+
+Live Lens is built using modern technologies that ensure a smooth and efficient user experience.
+
+| Technology      | Description                                     |
+|-----------------|-------------------------------------------------|
+| **React**       | Front-end framework for building user interfaces |
+| **Next.js**     | React framework for server-side rendering (SSR)  |
+| **Tailwind CSS**| Utility-first CSS framework for styling          |
+| **Prisma**      | ORM for database interaction                    |
+| **Shadcn UI**   | Pre-built component library for React            |
+| **Axios**       | HTTP client for API requests                     |
+| **BcryptJS**    | Password hashing for secure authentication       |
+| **Moment.js**   | Date/time formatting library                    |
+| **Zod**         | Validation library for type-safe schemas         |
+
+---
+
+## 📂 Project Structure
+
 ```
+├── public
+│   └── images
+│       └── logo.png
+├── src
+│   ├── components
+│   ├── pages
+│   ├── styles
+│   ├── utils
+│   └── services
+├── prisma
+│   └── schema.prisma
+└── README.md
+```
+## ⚙️ Installation and Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Follow these steps to get a local copy of Live Lens up and running.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    ```
+    git clone https://github.com/unhiredcoder/livelens.git
+    cd livelens
+    ```
 
-## Learn More
+2. **Install dependencies:**
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Set up the environment variables:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    Create a `.env` file in the root directory and add the following:
 
-## Deploy on Vercel
+    ```
+ NEXT_PUBLIC_APP_URL=http://your-app-url
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+NEXTAUTH_URL=http://your-auth-url
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+NEXTAUTH_SECRET=YOUR_NEXTAUTH_SECRET
+
+DATABASE_URL=postgresql://your-db-username:your-db-password@your-db-host:5432/your-db-name
+
+EDGE_STORE_ACCESS_KEY=YOUR_EDGE_STORE_ACCESS_KEY
+
+EDGE_STORE_SECRET_KEY=YOUR_EDGE_STORE_SECRET_KEY
+
+NEXT_PUBLIC_EDGE_STORE_URL=http://your-edge-store-url
+
+GITHUB_CLIENT_ID=YOUR_GITHUB_CLIENT_ID
+
+GITHUB_CLIENT_SECRET=YOUR_GITHUB_CLIENT_SECRET
+
+    ```
+
+4. **Run the app locally:**
+
+    ```
+    npm run dev
+    ```
+
+    The app will be running on `http://localhost:3000`.
