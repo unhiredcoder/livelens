@@ -6,7 +6,6 @@ import { getServerSession } from "next-auth";
 
 
 
-
 export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
     const session: CustomSession | null = await getServerSession(authOptions)
 

@@ -124,7 +124,7 @@ const AddPosts = () => {
                                     ) : (
                                         <>
                                             <AvatarImage
-                                                src={`https://api.multiavatar.com/${data?.user?.name}.png`}
+                                                src={`https://api.dicebear.com/7.x/fun-emoji/svg/${data?.user?.name}.png`}
                                             />
                                             <AvatarFallback className='text-2xl font-bold'>
                                                 {data?.user?.name ?? "A"}

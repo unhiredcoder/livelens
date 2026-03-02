@@ -18,7 +18,7 @@ const ShowUser = async ({ params }: { params: { id: number } }) => {
                 <div className='border-r-2 border-gray-700 pl-3 pr-3'>
                     <Avatar className='h-20 w-20 '>
                         <AvatarImage
-                            src={`https://api.multiavatar.com/${user?.name}.png`}
+                            src={`https://api.dicebear.com/7.x/fun-emoji/svg/${user?.name}.png`}
                         />                        <AvatarFallback className='text-2xl font-bold'> {user?.name ?? "A"}</AvatarFallback>
                     </Avatar>
                 </div>

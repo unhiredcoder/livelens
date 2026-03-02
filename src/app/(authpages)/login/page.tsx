@@ -132,7 +132,7 @@ function Login() {
 
                         </div>
                     </form>
-                    <div className="flex items-center my-4">
+                    {/* <div className="flex items-center my-4">
                         <hr className="flex-grow border-t border-gray-700" />
                         <div className="mx-2 text-gray-500 font-bold">OR</div>
                         <hr className="flex-grow border-t border-gray-700" />
@@ -157,7 +157,7 @@ function Login() {
                                 "Login with Github"
                             )}
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

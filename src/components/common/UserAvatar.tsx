@@ -13,7 +13,7 @@ const UserAvatar = ({ name, image }: { name: string, image?: string }) => {
   return (
     <Avatar>
       <AvatarImage
-        src={`https://api.multiavatar.com/${name}.png`}
+        src={`https://api.dicebear.com/7.x/fun-emoji/svg/${name}.png`}
         onError={handleImageError}
       />
       {error && (

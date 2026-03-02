@@ -29,7 +29,7 @@ const profile = async () => {
             ) : (
               <>
                 <AvatarImage
-                  src={`https://api.multiavatar.com/${session?.user?.name}.png`}
+                  src={`https://api.dicebear.com/7.x/fun-emoji/svg/${session?.user?.name}.png`}
                 />                  
                  <AvatarFallback className='text-2xl font-bold'>
                   {session?.user?.name ?? "A"}

@@ -6,6 +6,60 @@
     import { VinejsCommentSchema } from "@/validator/VinejsCommentSchema";
     import prisma from "@/Database/db.config";
 
+
+
+
+export async function GET(request: NextRequest) {
+    try {
+        const postId = request.nextUrl.searchParams.get("post_id");
+        
+        if (!postId) {
+            return NextResponse.json({ 
+                error: "Post ID is required" 
+            }, { status: 400 });
+        }
+
+        const comments = await prisma.comment.findMany({
+            where: {
+                post_id: parseInt(postId),
+            },
+            include: {
+                user: {
+                    select: {
+                        name: true
+                    },
+                },
+            },
+            orderBy: {
+                created_at: "desc",
+            },
+        });
+
+        return NextResponse.json({ 
+            comments,
+            status: 200 
+        });
+    } catch (error) {
+        console.error("Error fetching comments:", error);
+        return NextResponse.json(
+            { 
+                error: "Failed to fetch comments",
+                status: 500 
+            },
+            { status: 500 }
+        );
+    }
+}
+
+
+
+
+
+
+
+
+
+
     export async function POST(request: NextRequest) {
 
         const data = await request.json()
